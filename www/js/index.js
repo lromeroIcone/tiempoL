@@ -35,15 +35,48 @@ var app = {
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
     },
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
+    setupPush: function () {
+        console.log('calling push init');
+        var push = PushNotification.init({
+            "android": {
+                "senderID": "850130729204",
+                "sound": true,
+                "vibrate": true,
+                "forceShow": true
+            },
+            "browser": {},
+            "ios": {
+                "sound": true,
+                "vibration": true,
+                "badge": true
+            },
+            "windows": {}
+        });
+        console.log('after init');
 
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
+        push.on('registration', function (data) {
+            console.log('registration event: ' + data.registrationId);
 
-        console.log('Received Event: ' + id);
+            var oldRegId = localStorage.getItem('registrationId');
+
+            // Save new registration ID
+            localStorage.setItem('registrationId', data.registrationId);
+            // Post registrationId to your app server as the value has changed
+
+        });
+
+        push.on('error', function (e) {
+            console.log("push error = " + e.message);
+        });
+
+        push.on('notification', function (data) {
+            console.log('notification event');
+            navigator.notification.alert(
+                data.message,         // message
+                null,                 // callback
+                data.title,           // title
+                'Oki'                  // buttonName
+            );
+        });
     }
 };
