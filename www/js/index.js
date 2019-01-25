@@ -16,6 +16,19 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+$(document).ready(function () {
+
+    $(".usuario").text(localStorage.getItem("nombre"));
+
+    $(".credit").text("$" + localStorage.getItem("credit"));
+
+    $(".close").click(function () {
+        localStorage.clear();
+        $.mobile.navigate("#login", { transition: "pop", info: "info about the #foo hash" });
+    });
+
+});
+
 var app = {
     // Application Constructor
     initialize: function() {
