@@ -1,0 +1,16 @@
+@font-face {
+  font-family: 'futuraL';
+  src: url('../fonts/futura light bt.ttf');
+}
+@font-face {
+  font-family: 'futuraM';
+  src: url('../fonts/futura medium bt.ttf');
+}
+@font-face {
+  font-family: 'futuraB';
+  src: url('../fonts/futura-bold-bt-59035529e68ed.ttf');
+}
+@font-face {
+  font-family: 'futuraMC';
+  src: url('../fonts/futura medium condensed bt.ttf');
+}
