@@ -282,6 +282,10 @@ $(document).ready(function(){
   $('#elguarn').hide();
   //$('#elguarn').remove();
 
+  $(".usuario").text(localStorage.getItem("nombre"));
+
+  $(".credit").text("$" + localStorage.getItem("credit"));
+
   $('#inicio').on('pagebeforeshow', function (event) {
     getSchoolsC();
   });
