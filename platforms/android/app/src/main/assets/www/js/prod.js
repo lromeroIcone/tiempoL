@@ -50,90 +50,7 @@ function getSchoolsC() {
   });
 }
 
-function getFood(cat){
-  var sc =	localStorage.getItem("school");
-  $.ajax({
-    url: "https://www.icone-solutions.com/tlunch/sqlOP.php",
-    type: "POST",
-    data: {foodc: cat, sc:sc},
-
-    success: function(data){
-      $("#comlist").empty();
-      var jsonObj = jQuery.parseJSON(data);
-      var nombres = jsonObj[0].split("_");
-      var precios = jsonObj[1].split("_");
-      var ids = jsonObj[2].split("_");
-      if(nombres[0]!=""){
-        for(var i=0;i<nombres.length;i++){
-          var extra = "";
-          if(nombres[i].length >20){
-            var extra = "...";
-          }
-          //$("#comlist").append('<li><p class="pname">'+nombres[i]+' <a class="aplus" href=""><i class="fa fa-plus "></i></a><span class="cants">0</span><a class="aminus" href=""><i class="fa fa-minus"></i></a><span class="price">$'+precios[i]+'</span></p> </li>');
-          $("#comlist").append('<li><p class="pname"><span class="iname">'+nombres[i].substr(0,20)+extra+'</span> <a class="showi" data-prod="'+ids[i]+'" href="" ><img width="20px" src="img/lista.png" /></a><span class="price">$'+precios[i]+'</span></p> </li>');
-        }
-      }
-      $.mobile.navigate( "#comida", {transition:"slide" });
-    }
-  });
-}
-
-function getCategories(){
-  var esc = localStorage.getItem("school");
-  $.ajax({
-    url: "https://www.icone-solutions.com/tlunch/sqlOP.php",
-    type: "POST",
-    data: {cats: esc},
-
-    success: function(data){
-
-      $("#categories").empty();
-      var jsonObj = jQuery.parseJSON(data);
-
-      for(var i=0;i<jsonObj.length;i++){
-        if(i==0){
-          $("#categories").append('<a  data-catg="'+jsonObj[i][0]+'" class="elm-cent"  ><img width="100%" src="img/'+jsonObj[i][1]+'" /></a>');
-        }else{
-        $("#categories").append('<a  data-catg="'+jsonObj[i][0]+'" class="elm-cent menusecs"  ><img width="100%" src="img/'+jsonObj[i][1]+'" /></a>');
-        }
-      }
-
-    },
-    error: function(data){
-      swal("Error","Revisa tu conexión y vuelve a intentarlo","error")
-    }
-  });
-}
-
-function getOrders(){
-  $("#orderlist").html("");
-  var client = localStorage.getItem("user");
-  $.ajax({
-    url: "https://www.icone-solutions.com/tlunch/sqlOP.php",
-    type: "POST",
-    data: {orders: 1,client: client},
-
-    success: function(data){
-
-      var jsonObj = jQuery.parseJSON(data);
-      var productos = jsonObj[1].split("-");
-      var tiempo = jsonObj[0].split(",");
-      var total = jsonObj[2].split(",");
-      var id = jsonObj[3].split(",");
-      if(productos[0]!=""){
-        $("#orderlist").append('<li><p class="tname">Productos <span class="pricet">Tiempo estimado</span> <span class="pricet">Total</span></p></li>');
-        for(var i=0;i<tiempo.length;i++){
-          $("#orderlist").append('<li><p class="pname"><span class="iname">'+productos[i]+'</span> <a id="'+id[i]+'" class="atimes" href=""><i class="fa fa-times "></i></a><span class="price">'+tiempo[i]+'</span> <span class="price">$'+total[i]+'</span></p></li>');
-        }
-      }
-    },
-    error: function(data){
-        swal("Error","Revisa tu conexión y vuelve a intentarlo","error")
-    }
-  });
-}
-
-function login(){
+function login() {
   var form = new FormData($("#logForm")[0]);
 
   form.append("regID", localStorage.getItem('registrationId'));
@@ -188,9 +105,13 @@ function getCategories() {
           $("#categories").append('<a  data-catg="' + jsonObj[i][0] + '" class="elm-cent menusecs gtsec"  ><img width="100%" src="img/' + jsonObj[i][1] + '" /></a>');
         }
       }
+    },
+    error: function (data) {
+      swal("Error", "Revisa tu conexión y vuelve a intentarlo", "error")
     }
   });
 }
+
 function register() {
   var form = new FormData($("#regForm")[0]);
   $.ajax({
@@ -267,7 +188,94 @@ function getSchools() {
   });
 }
 
+function getFood(cat){
+  var sc =	localStorage.getItem("school");
+  $.ajax({
+    url: "https://www.icone-solutions.com/tlunch/sqlOP.php",
+    type: "POST",
+    data: {foodc: cat, sc:sc},
+
+    success: function(data){
+      $("#comlist").empty();
+      var jsonObj = jQuery.parseJSON(data);
+      var nombres = jsonObj[0].split("_");
+      var precios = jsonObj[1].split("_");
+      var ids = jsonObj[2].split("_");
+      if(nombres[0]!=""){
+        for(var i=0;i<nombres.length;i++){
+          var extra = "";
+          if(nombres[i].length >20){
+            var extra = "...";
+          }
+          //$("#comlist").append('<li><p class="pname">'+nombres[i]+' <a class="aplus" href=""><i class="fa fa-plus "></i></a><span class="cants">0</span><a class="aminus" href=""><i class="fa fa-minus"></i></a><span class="price">$'+precios[i]+'</span></p> </li>');
+          $("#comlist").append('<li><p class="pname"><span class="iname">'+nombres[i].substr(0,20)+extra+'</span> <a class="showi" data-prod="'+ids[i]+'" href="" ><img width="20px" src="img/lista.png" /></a><span class="price">$'+precios[i]+'</span></p> </li>');
+        }
+      }
+      $.mobile.navigate( "#comida", {transition:"slide" });
+    }
+  });
+}
+
+/*function getCategories(){
+  var esc = localStorage.getItem("school");
+  $.ajax({
+    url: "https://www.icone-solutions.com/tlunch/sqlOP.php",
+    type: "POST",
+    data: {cats: esc},
+
+    success: function(data){
+
+      $("#categories").empty();
+      var jsonObj = jQuery.parseJSON(data);
+
+      for(var i=0;i<jsonObj.length;i++){
+        if(i==0){
+          $("#categories").append('<a  data-catg="'+jsonObj[i][0]+'" class="elm-cent"  ><img width="100%" src="img/'+jsonObj[i][1]+'" /></a>');
+        }else{
+        $("#categories").append('<a  data-catg="'+jsonObj[i][0]+'" class="elm-cent menusecs"  ><img width="100%" src="img/'+jsonObj[i][1]+'" /></a>');
+        }
+      }
+
+    },
+    error: function(data){
+      swal("Error","Revisa tu conexión y vuelve a intentarlo","error")
+    }
+  });
+}*/
+
+function getOrders(){
+  $("#orderlist").html("");
+  var client = localStorage.getItem("user");
+  $.ajax({
+    url: "https://www.icone-solutions.com/tlunch/sqlOP.php",
+    type: "POST",
+    data: {orders: 1,client: client},
+
+    success: function(data){
+
+      var jsonObj = jQuery.parseJSON(data);
+      var productos = jsonObj[1].split("-");
+      var tiempo = jsonObj[0].split(",");
+      var total = jsonObj[2].split(",");
+      var id = jsonObj[3].split(",");
+      if(productos[0]!=""){
+        $("#orderlist").append('<li><p class="tname">Productos <span class="pricet">Tiempo estimado</span> <span class="pricet">Total</span></p></li>');
+        for(var i=0;i<tiempo.length;i++){
+          $("#orderlist").append('<li><p class="pname"><span class="iname">'+productos[i]+'</span> <a id="'+id[i]+'" class="atimes" href=""><i class="fa fa-times "></i></a><span class="price">'+tiempo[i]+'</span> <span class="price">$'+total[i]+'</span></p></li>');
+        }
+      }
+    },
+    error: function(data){
+        swal("Error","Revisa tu conexión y vuelve a intentarlo","error")
+    }
+  });
+}
+
 $(document).ready(function(){
+  $(".usuario").text(localStorage.getItem("nombre"));
+
+  $(".credit").text("$" + localStorage.getItem("credit"));
+
   //console.log("Hola");
   var prods =new Array();
   var prices =new Array();
@@ -281,10 +289,6 @@ $(document).ready(function(){
   $('#hora').val(tos);
   $('#elguarn').hide();
   //$('#elguarn').remove();
-
-  $(".usuario").text(localStorage.getItem("nombre"));
-
-  $(".credit").text("$" + localStorage.getItem("credit"));
 
   $('#inicio').on('pagebeforeshow', function (event) {
     getSchoolsC();
