@@ -561,7 +561,9 @@ $(document).ready(function(){
  	  $("#orderlist").html("");
  	  getOrders();
   }
- 
-  getAllF();
+
+  if(localStorage.getItem("user")!=null){
+    getAllF();
+  } 
 
 });
