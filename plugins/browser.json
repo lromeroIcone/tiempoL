@@ -36,6 +36,15 @@
     },
     "cordova-plugin-vibration": {
       "PACKAGE_NAME": "com.example.tiempo"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "com.example.tiempo"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.example.tiempo"
+    },
+    "phonegap-plugin-push": {
+      "PACKAGE_NAME": "com.example.tiempo"
     }
   },
   "dependent_plugins": {

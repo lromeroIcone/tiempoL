@@ -4,7 +4,7 @@
   "name": "Tiempo",
   "short_name": "Tiempo",
   "version": "com.example.tiempo",
-  "description": "Hello World sample application that responds to the deviceready event.",
+  "description": "Aplicación para venta de productos de cafeterias",
   "author": "PhoneGap Team",
   "icons": [],
   "start_url": "index.html"

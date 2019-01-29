@@ -64,52 +64,54 @@ function login(){
 		success: function(data){
 			console.log(data);
 		 	$.mobile.loading( "hide" );
-	    if(data.toString()!=="0"){
-	    	var datos = data.toString().split(";");
-	    	user = datos[0];
-	    	school = datos[1];
-	    	credit = datos[2];
-	    	nombre = datos[3];
-	    	localStorage.setItem("user",user);
-	    	localStorage.setItem("nombre",nombre);
-        localStorage.setItem("school",school);
-        localStorage.setItem("credit",credit);
-        $(".usuario").text(localStorage.getItem("nombre"));
-        getCategories();
-        getCredit();
-	    	$.mobile.navigate( "#inicio", { transition : "slide",info: "info about the #foo hash" });
-	    } else{
-	    	$("#mess").text("Usuario o contraseña incorrectos");
-	    	$("#mess").show();
-	    }
-	    $("#enter").prop("disabled",false);
-    }
+			if(data.toString()!=="0"){
+				var datos = data.toString().split(";");
+				user = datos[0];
+				school = datos[1];
+				credit = datos[2];
+				nombre = datos[3];
+				localStorage.setItem("user",user);
+				localStorage.setItem("nombre",nombre);
+				localStorage.setItem("school",school);
+				localStorage.setItem("credit",credit);
+				$(".usuario").text(localStorage.getItem("nombre"));
+				getCategories();
+				getCredit();
+				$.mobile.navigate( "#inicio", { transition : "slide",info: "info about the #foo hash" });
+			} else{
+				$("#mess").text("Usuario o contraseña incorrectos");
+				$("#mess").show();
+			}
+			$("#enter").prop("disabled",false);
+    	}
 
-  });
-    }
-    function getCategories(){
-      var esc = localStorage.getItem("school");
-      console.log(esc);
-    	$.ajax({
+  	});
+}
+	
+function getCategories(){
+	var esc = localStorage.getItem("school");
+	console.log(esc);
+	$.ajax({
       	url: "https://www.icone-solutions.com/tlunch/sqlOP.php",
       	type: "POST",
       	data: {cats: esc},
         success: function(data){
-          $("#categories").empty();
+			$("#categories").empty();
 	        var jsonObj = jQuery.parseJSON(data);
 	        for(var i=0;i<jsonObj.length;i++){
-		         if(i==0){
-		           $("#categories").append('<a  data-catg="'+jsonObj[i][0]+'" class="elm-cent gtsec"  ><img width="100%" src="img/'+jsonObj[i][1]+'" /></a>');
-	           } else{
-	             $("#categories").append('<a  data-catg="'+jsonObj[i][0]+'" class="elm-cent menusecs gtsec"  ><img width="100%" src="img/'+jsonObj[i][1]+'" /></a>');
-	           }
+				if(i==0){
+					$("#categories").append('<a  data-catg="'+jsonObj[i][0]+'" class="elm-cent gtsec"  ><img width="100%" src="img/'+jsonObj[i][1]+'" /></a>');
+	           	} else{
+					$("#categories").append('<a  data-catg="'+jsonObj[i][0]+'" class="elm-cent menusecs gtsec"  ><img width="100%" src="img/'+jsonObj[i][1]+'" /></a>');
+	           	}
 	        }
         }
-      });
-    }
-    function register(){
-    	var form = new FormData($("#regForm")[0]);
-    	$.ajax({
+	});
+}
+
+function register(){
+	var form = new FormData($("#regForm")[0]);
+	$.ajax({
       	url: "https://www.icone-solutions.com/tlunch/sqlOP.php",
       	type: "POST",
       	data: form,
@@ -117,27 +119,26 @@ function login(){
       	cache: false,
       	processData:false,
       	success: function(data){
-      		 $.mobile.loading( "hide" );
+			$.mobile.loading( "hide" );
       	    if(data.toString()=="0"){
-      	    	var datos = data.toString().split(",");
+				var datos = data.toString().split(",");
 
-                  swal("Listo","Tu usuario ha sido registrado exitosamente.","success");
+				swal("Listo","Tu usuario ha sido registrado exitosamente.","success");
       	    	$.mobile.navigate( "#login", { transition : "slide",info: "info about the #foo hash" });
 
-
       	    } else if(data.toString()=="1"){
-              swal("Error","Este usuario ya fue registrado.","error");
+				swal("Error","Este usuario ya fue registrado.","error");
             }else{
-                 swal("Error",data.toString(),"error");
+				swal("Error",data.toString(),"error");
       	    }
       	    $("#rega").prop("disabled",false);
-      	    }
-        });
-    }
+		}
+	});
+}
 
-    function forgetP(){
-    	var form = new FormData($("#forForm")[0]);
-    	$.ajax({
+function forgetP(){
+	var form = new FormData($("#forForm")[0]);
+	$.ajax({
       	url: "https://www.icone-solutions.com/tlunch/forget.php",
       	type: "POST",
       	data: form,
@@ -145,22 +146,18 @@ function login(){
       	cache: false,
       	processData:false,
       	success: function(data){
-      		 $.mobile.loading( "hide" );
+			$.mobile.loading( "hide" );
       	    if(data.toString()=="0"){
-
-
-                  swal("Listo","Se ha enviado un mensaje a tu cuenta de correo con la información de tu contraseña.","success");
+				swal("Listo","Se ha enviado un mensaje a tu cuenta de correo con la información de tu contraseña.","success");
       	    	$.mobile.navigate( "#login", { transition : "slideup",info: "info about the #foo hash" });
-
-
       	    }else{
-                 swal("Error",data.toString(),"error");
+				swal("Error",data.toString(),"error");
       	    }
       	    $("#forg").prop("disabled",false);
-      	    }
+		}
 
-        });
-    }
+	});
+}
 
 function getSchools(){
 	$.ajax({
@@ -184,81 +181,80 @@ function getSchools(){
 }
 
 $(document).ready(function(){
-	 //getSchoolsC();
-	 console.log("Hello");
+	//getSchoolsC();
+	console.log("Hello");
    	$( '#inicio' ).on( 'pagebeforeshow',function(event){
          getSchoolsC();
-      });
+	});
     $(".schoolS").change(function(){
     	localStorage.setItem("school",$(this).val());
     	getCategories();
     });
     $("#logForm").submit(function(e){
     	e.preventDefault();
-	$("#mess").hide();
-	var form = this;
-	$("#enter").prop("disabled",true);
-	 html = $(this).jqmData( "html" ) || "";
-	$.mobile.loading( "show", {
-            text: "Cargando",
-            textVisible: true,
-            theme: "b",
-            textonly: false,
-            html: html
-            });
+		$("#mess").hide();
+		var form = this;
+		$("#enter").prop("disabled",true);
+		html = $(this).jqmData( "html" ) || "";
+		$.mobile.loading( "show", {
+			text: "Cargando",
+			textVisible: true,
+			theme: "b",
+			textonly: false,
+			html: html
+		});
 
-	login();
-   });
+		login();
+	});
 
    	$("#regForm").submit(function(e){
-		 e.preventDefault();
-		 var con = $('#pass').val();
-		 var tra = $('#pass1').val();
-		 var empty = $(this).find("input").filter(function() {
-        return this.value === "";
-  	 });
-  	 if(!empty.length) {
-			 if(con == tra){
-				 $("#mess").hide();
-  	   	 html = $(this).jqmData( "html" ) || "";
-  	     $("#rega").prop("disabled",true);
-  	     $.mobile.loading( "show", {
-              text: "Cargando",
-              textVisible: true,
-              theme: "b",
-              textonly: false,
-              html: html
-              });
-     		 register();
-			 } else {
-				 swal("Error de contraseñas","Las contraseñas no coinciden");
-			 }
-     }else{
-    	swal("Campos vacios","Debes completar todos los campos");
-    }
-   });
-   $("#forForm").submit(function(e){
-    e.preventDefault();
-    var empty = $(this).find("input").filter(function() {
-
-        return this.value === "";
-    });
-    if(!empty.length) {
-	   html = $(this).jqmData( "html" ) || "";
-	   $("#forg").prop("disabled",true);
-	   $.mobile.loading( "show", {
-            text: "Cargando",
-            textVisible: true,
-            theme: "b",
-            textonly: false,
-            html: html
+		e.preventDefault();
+		var con = $('#pass').val();
+		var tra = $('#pass1').val();
+		var empty = $(this).find("input").filter(function() {
+        	return this.value === "";
+  	 	});
+  	 	if(!empty.length) {
+			if(con == tra){
+				$("#mess").hide();
+				html = $(this).jqmData( "html" ) || "";
+				$("#rega").prop("disabled",true);
+				$.mobile.loading( "show", {
+					text: "Cargando",
+					textVisible: true,
+					theme: "b",
+					textonly: false,
+					html: html
+				});
+				register();
+			} else {
+				swal("Error de contraseñas","Las contraseñas no coinciden");
+			}
+     	} else{
+    		swal("Campos vacios","Debes completar todos los campos");
+    	}
+   	});
+	   
+	$("#forForm").submit(function(e){
+    	e.preventDefault();
+    	var empty = $(this).find("input").filter(function() {
+        	return this.value === "";
+    	});
+    	if(!empty.length) {
+	   		html = $(this).jqmData( "html" ) || "";
+	   		$("#forg").prop("disabled",true);
+	   		$.mobile.loading( "show", {
+				text: "Cargando",
+				textVisible: true,
+				theme: "b",
+				textonly: false,
+				html: html
             });
-	  forgetP();
-    }else{
-    	swal("Campos vacios","Debes completar todos los campos");
-    }
-
-   });
+	  		forgetP();
+    	} else{
+    		swal("Campos vacios","Debes completar todos los campos");
+    	}
+   	});
 
 
       // STARTS and Resets the loop if any

@@ -76,7 +76,7 @@ function getOrders(){
       }
     },
     error: function(data){
-        swal("Error","Revisa tu conexión y vuelve a intentarlo","error")
+        swal("Error","Revisa tu conexión y vuelve a intentarlo 1","error")
     }
   });
 }
@@ -561,7 +561,9 @@ $(document).ready(function(){
  	  $("#orderlist").html("");
  	  getOrders();
   }
- 
-  getAllF();
+
+  if(localStorage.getItem("user")!=null){
+    getAllF();
+  } 
 
 });
