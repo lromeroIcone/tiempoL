@@ -76,7 +76,7 @@ function getOrders(){
       }
     },
     error: function(data){
-        swal("Error","Revisa tu conexión y vuelve a intentarlo","error")
+        swal("Error","Revisa tu conexión y vuelve a intentarlo 1","error")
     }
   });
 }

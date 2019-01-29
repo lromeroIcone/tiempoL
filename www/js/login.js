@@ -162,8 +162,8 @@ function login(){
         });
     }
 
-		function getSchools(){
-		$.ajax({
+function getSchools(){
+	$.ajax({
 		url: "https://www.icone-solutions.com/tlunch/sqlOP.php",
 		type: "POST",
 		data: {school: 1},
@@ -177,11 +177,11 @@ function login(){
 			for(var i=0;i<nombres.length;i++){
 				$("#schoolList").append('<option value="'+id[i]+'">'+nombres[i]+'</option>');
 			}
-				 }
 			}
-
-			});
 		}
+
+	});
+}
 
 $(document).ready(function(){
 	 //getSchoolsC();
@@ -269,6 +269,6 @@ $(document).ready(function(){
 	/* */
 
 
-getSchools();
+	getSchools();
 
 });
